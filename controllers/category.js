@@ -44,9 +44,10 @@ exports.getAllCategory = (req, res) => {
 
 //controller to update any particular category
 exports.updateCategory = (req, res) => {
-  const category = req.category;
-  category.name = req.body.name;
-  category.save((err, updatedCategory) => {
+ console.log(req.body, res)
+  Category.findOneAndUpdate({
+     _id: req.category._id },
+    { $set: { name: req.body.name } },(err, updatedCategory) => {
     if (err) {
       return res.status(400).json({
         error: "Failed to update the category",

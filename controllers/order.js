@@ -51,7 +51,7 @@ exports.getOrderStatus = (req, res) => {
 
 //to update the status of the order (for admin only)
 exports.updateOrderStatus = (req, res) => {
-  Order.update(
+  Order.findOneAndUpdate(
     { _id: req.body.orderId },
     { $set: { status: req.body.status } },
     (err, updatedOrder) => {

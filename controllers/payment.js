@@ -6,6 +6,7 @@ const { v4: uuid } = require('uuid');
 exports.makeStripePayment = (req, res) => {
   const { products, token } = req.body;
 
+  console.log("saaaaaaaaaaaa",token, products)
   let amount = 0;
   products.map((p) => {
     amount += p.price;
@@ -20,6 +21,7 @@ exports.makeStripePayment = (req, res) => {
       source: token.id,
     })
     .then((customer) => {
+      console.log('customer:', customer)
       stripe.charges
         .create(
           {
@@ -35,7 +37,7 @@ exports.makeStripePayment = (req, res) => {
                 line2: token.card.address_line2,
                 city: token.card.address_city,
                 country: token.card.address_country,
-                zip: token.card.address_zip,
+                postal_code: token.card.address_zip,
               },
             },
           },
@@ -52,9 +54,9 @@ var braintree = require("braintree");
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
-  merchantId: "5rsr8h4qm5m8xtrf",
-  publicKey: "945sw2mv8vcjvzyd",
-  privateKey: "3ca046375ddf49079a63710bf8b80268",
+  merchantId: "q3z76m3g9mtcc5bq",
+  publicKey: "vxhd3ntbjmc4hc48",
+  privateKey: "549011f063f2a170d5726713dc643c7a",
 });
 
 exports.getToken = (req, res) => {
@@ -70,6 +72,7 @@ exports.getToken = (req, res) => {
 exports.makeTransaction = (req, res) => {
   let nonceFromTheClient = req.body.paymentMethodNonce;
   let amountFromTheClient = req.body.amount;
+  console.log(req.body)
   gateway.transaction.sale(
     {
       amount: amountFromTheClient,
