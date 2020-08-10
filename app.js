@@ -26,6 +26,9 @@ mongoose
   .catch(() => console.log("Error in connecting to MONGODB"));
 
 //Middlewares
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json()); // parse application/json
 app.use(cookieParser());
 app.use(cors());

@@ -14,6 +14,7 @@ exports.getCategoryById = (req, res, next, id) => {
 
 //controller to create the category (for admin only)
 exports.createCategory = (req, res) => {
+  console.log(req)
   const category = new Category(req.body);
   category.save((err, category) => {
     if (err) {
